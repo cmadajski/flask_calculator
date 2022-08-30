@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <h1>Flask Calculator App</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class=flashes>
+        {% for message in messages %}
+            <p style="background-color:crimson;padding:20px;border-radius:10px;font-weight:700;width:fit-content;color:white;">{{ message }}</p>
+        {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+    <form action="/math_operations" method="post" style="padding:10px;background-color:rgb(60, 60, 60);color:white;border-top-right-radius:10px;border-top-left-radius:10px;width:380px;">
+        <label for="a">Number A</label>
+        <input type="text" id="a" name="a"><br><br>
+        <label for="b">Number B</label>
+        <input type="text" id="b" name="b"><br><br>
+        <select id="operation" name="operation">
+            <option value="add" selected>Addition</option>
+            <option value="sub">Subtraction</option>
+            <option value="mul">Multiplication</option>
+            <option value="div">Division</option>
+            <option value="exp">Exponent</option>
+            <option value="sq">Square</option>
+            <option value="sqrt">Square Root</option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+    <div style="background-color:rgb(60,60,60);width:400px;">
+        <a href="/clear" style="text-decoration:none;">
+            <button style="margin:10px;">Clear</button>
+        </a>
+    </div>
+    {% if result %}
+    <div style="background-color:chartreuse;border-bottom-right-radius:10px;border-bottom-left-radius:10px;width:400px;">
+        <span style="display:block;padding:10px;font-weight:700;width:fit-content;margin: 0 auto;">RESULT: {{ result }}</span>
+    </div>
+    {% endif %}
+    {% if log %}
+        {% for item in log[::-1] %}
+            <div style="padding:10px;margin:10px 0;background-color:rgb(60, 60, 60);color:white;border-radius:5px;width:380px;">
+                <p>{{ item["a"] }} {{ item["operator"] }} {{ item["b"] }} = {{ item["result"] }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+    <p>Log is empty, no data to show!</p>
+    {% endif %}
+</body>
+</html>
